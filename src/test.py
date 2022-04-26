@@ -1,4 +1,4 @@
-from hear_speak import *
+from src.hear_speak import *
 # from speak import *
 
 speak("Xin chào")
