@@ -6,12 +6,9 @@ import os
 def hear():
     c = sr.Recognizer()
     with sr.Microphone() as source:
-        # print("Adjusting noise ")
-        c.adjust_for_ambient_noise(source, duration = 2)
-        # print("Recording for 4 seconds")
+        c.adjust_for_ambient_noise(source, duration = 2)   
         c.pause_threshold = 2
         audio = c.listen(source, phrase_time_limit = 3)
-        # print("Done recording")
     try:
         query = c.recognize_google(audio,language='vi-VN')
         print("SmartHome: "+query)
