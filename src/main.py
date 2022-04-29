@@ -25,8 +25,16 @@ def disconnected(client):
     sys.exit(1)
 
 Ai = ""
-Led_bedroom = 45
-Led_bathroom = 44
+ON_Bedroom = 55
+OFF_Bedroom = 45
+ON_Bathroom = 54
+OFF_Bathroom = 46
+Strong = 40
+Medium = 30
+Fit = 20
+OFF_Fan = 0
+Led_bedroom = OFF_Bedroom
+Led_bathroom = OFF_Bathroom
 Fan_kitchen = 0
 
 def message(client, feed_id, payload):
@@ -41,13 +49,13 @@ def message(client, feed_id, payload):
     elif payload == "47":
         Ai = 0
     elif payload == "55":
-        Led_bedroom = 55
+        Led_bedroom = ON_Bedroom
     elif payload == "45":
-        Led_bedroom = 45 
-    elif payload == "56":
-        Led_bathroom = 56  
-    elif payload == "44": 
-        Led_bathroom = 44
+        Led_bedroom = OFF_Bedroom 
+    elif payload == "54":
+        Led_bathroom = ON_Bathroom  
+    elif payload == "46": 
+        Led_bathroom = OFF_Bathroom
     else:
         Fan_kitchen = int(payload) 
 
@@ -126,13 +134,6 @@ def readSerial():
             else:
                 mess = mess[end+1:]
 
-ON = 55
-OFF = 45
-Strong = 40
-Medium = 30
-Fit = 20
-OFF_Fan = 0
-
 def fan():
     global Fan_kitchen
     speak("Bạn muốn chọn chế độ bật quạt nào: \n1, To \n2, Trung bình \n3, Nhỏ ")
@@ -166,11 +167,11 @@ def AI():
                 speak("Bạn muốn bật đèn nào: \n1, phòng ngủ \n2, phòng tắm")
                 text = hear()
                 if "phòng ngủ" in text:
-                    if Led_bedroom == ON:
+                    if Led_bedroom == ON_Bedroom:
                         speak("Đèn phòng ngủ đang bật bạn đừng trêu tôi")
                     else:
-                        client.publish("bedroom.led", ON)
-                        Led_bedroom = ON
+                        client.publish("bedroom.led", ON_Bedroom)
+                        Led_bedroom = ON_Bedroom
                         speak("Đèn phòng ngủ đã bật")
                 elif "phòng tắm" :
                     speak("Tôi chưa được dạy")
@@ -178,11 +179,11 @@ def AI():
                 speak("Bạn muốn tắt đèn nào: \n1, phòng ngủ \n2, phòng tắm")
                 text = hear()
                 if "phòng ngủ" in text:
-                    if Led_bedroom == OFF:
+                    if Led_bedroom == OFF_Bedroom:
                         speak("Đèn phòng ngủ đang tắt bạn đừng trêu tôi")
                     else:
-                        client.publish("bedroom.led", OFF)
-                        Led_bedroom = OFF
+                        client.publish("bedroom.led", OFF_Bedroom)
+                        Led_bedroom = OFF_Bedroom
                         speak("Đèn phòng ngủ đã tắt")
                 elif "phòng tắm" :
                     speak("Tôi chưa được dạy")
